@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.91.0](https://github.com/googleapis/python-aiplatform/compare/v1.90.0...v1.91.0) (2025-04-24)
+
+
+### Features
+
+* Add Model Garden deploy SDK documentation and use cases. ([6eea5f4](https://github.com/googleapis/python-aiplatform/commit/6eea5f4fc05444cf47609fbe4da9038d5fa6ac29))
+* Update upperbound for langgraph ([547bf01](https://github.com/googleapis/python-aiplatform/commit/547bf01410647b104c6b8134d57b8c27847558b4))
+
 ## [1.90.0](https://github.com/googleapis/python-aiplatform/compare/v1.89.0...v1.90.0) (2025-04-22)
 
 
