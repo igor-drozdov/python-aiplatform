@@ -177,7 +177,8 @@ class PersistentResource(base.VertexAiResourceNounWithFutureManager):
         labels: Optional[Dict[str, str]] = None,
         network: Optional[str] = None,
         kms_key_name: Optional[str] = None,
-        service_account: Optional[str] = None,
+        # service_account: Optional[str] = None,
+        enable_custom_service_account: Optional[bool] = None,
         reserved_ip_ranges: List[str] = None,
         sync: Optional[bool] = True,  # pylint: disable=unused-argument
         project: Optional[str] = None,
@@ -240,19 +241,16 @@ class PersistentResource(base.VertexAiResourceNounWithFutureManager):
                 PersistentResource. If set, this PersistentResource and all
                 sub-resources of this PersistentResource will be secured by
                 this key.
-            service_account (str):
-                Optional. Default service account that this
-                PersistentResource's workloads run as. The workloads
-                including
+            enable_custom_service_account (bool):
+                Optional. Enables using a custom service account for workloads on this
+                PersistentResource. Defaults to None (False behavior).
 
-                -  Any runtime specified via ``ResourceRuntimeSpec`` on
-                   creation time, for example, Ray.
-                -  Jobs submitted to PersistentResource, if no other service
-                   account specified in the job specs.
+                Set to True to allow workloads (runtimes, jobs) to run with a custom
+                service account (requires ``iam.serviceAccounts.actAs`` permission).
 
-                Only works when custom service account is enabled and users
-                have the ``iam.serviceAccounts.actAs`` permission on this
-                service account.
+                Replaces the deprecated ``service_account`` string parameter.
+                The specific custom service account is configured when running
+                workloads.
             reserved_ip_ranges (MutableSequence[str]):
                 Optional. A list of names for the reserved IP ranges under
                 the VPC network that can be used for this persistent
@@ -301,9 +299,9 @@ class PersistentResource(base.VertexAiResourceNounWithFutureManager):
                 gca_encryption_spec_compat.EncryptionSpec(kms_key_name=kms_key_name)
             )
 
-        if service_account:
+        if enable_custom_service_account is not None:
             service_account_spec = gca_persistent_resource_compat.ServiceAccountSpec(
-                enable_custom_service_account=True, service_account=service_account
+                enable_custom_service_account=enable_custom_service_account
             )
             gca_persistent_resource.resource_runtime_spec = (
                 gca_persistent_resource_compat.ResourceRuntimeSpec(

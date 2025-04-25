@@ -56,6 +56,7 @@ _TEST_NETWORK = test_constants.TrainingJobConstants._TEST_NETWORK
 _TEST_RESERVED_IP_RANGES = test_constants.TrainingJobConstants._TEST_RESERVED_IP_RANGES
 _TEST_KEY_NAME = test_constants.TrainingJobConstants._TEST_DEFAULT_ENCRYPTION_KEY_NAME
 _TEST_SERVICE_ACCOUNT = test_constants.ProjectConstants._TEST_SERVICE_ACCOUNT
+_TEST_ENABLE_CUSTOM_SERVICE_ACCOUNT_TRUE = test_constants.ProjectConstants._TEST_ENABLE_CUSTOM_SERVICE_ACCOUNT_TRUE
 
 _TEST_PERSISTENT_RESOURCE_PROTO = persistent_resource_compat.PersistentResource(
     name=_TEST_PERSISTENT_RESOURCE_ID,
@@ -302,7 +303,7 @@ class TestPersistentResourcePreview:
             resource_pools=[
                 test_constants.PersistentResourceConstants._TEST_RESOURCE_POOL,
             ],
-            service_account=_TEST_SERVICE_ACCOUNT,
+            enable_custom_service_account=_TEST_ENABLE_CUSTOM_SERVICE_ACCOUNT_TRUE,
             sync=sync,
         )
 
@@ -312,9 +313,8 @@ class TestPersistentResourcePreview:
         expected_persistent_resource_arg = _get_persistent_resource_proto(
             name=_TEST_PERSISTENT_RESOURCE_ID,
         )
-
         service_account_spec = persistent_resource_compat.ServiceAccountSpec(
-            enable_custom_service_account=True, service_account=_TEST_SERVICE_ACCOUNT
+            enable_custom_service_account=_TEST_ENABLE_CUSTOM_SERVICE_ACCOUNT_TRUE,
         )
         expected_persistent_resource_arg.resource_runtime_spec = (
             persistent_resource_compat.ResourceRuntimeSpec(
