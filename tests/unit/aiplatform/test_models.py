@@ -181,7 +181,7 @@ _TEST_PREDICTION_SCHEMA_URI = "gs://test/schema/predictions.yaml"
 _TEST_CREDENTIALS = mock.Mock(spec=auth_credentials.AnonymousCredentials())
 _TEST_SERVICE_ACCOUNT = "vinnys@my-project.iam.gserviceaccount.com"
 _TEST_MODEL_GARDEN_SOURCE_MODEL_NAME = "publishers/meta/models/llama3_1"
-
+_TEST_MODEL_GARDEN_SOURCE_MODEL_VERSION_ID = "001"
 
 _TEST_EXPLANATION_METADATA = explain.ExplanationMetadata(
     inputs={
@@ -1941,6 +1941,7 @@ class TestModel:
             sync=sync,
             upload_request_timeout=None,
             model_garden_source_model_name=_TEST_MODEL_GARDEN_SOURCE_MODEL_NAME,
+            model_garden_source_model_version_id=_TEST_MODEL_GARDEN_SOURCE_MODEL_VERSION_ID,
         )
 
         if not sync:
@@ -1958,7 +1959,8 @@ class TestModel:
             version_aliases=["default"],
             base_model_source=gca_model.Model.BaseModelSource(
                 model_garden_source=gca_model.ModelGardenSource(
-                    public_model_name=_TEST_MODEL_GARDEN_SOURCE_MODEL_NAME
+                    public_model_name=_TEST_MODEL_GARDEN_SOURCE_MODEL_NAME,
+                    version_id=_TEST_MODEL_GARDEN_SOURCE_MODEL_VERSION_ID,
                 )
             ),
         )
